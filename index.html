@@ -49,7 +49,7 @@ title: My GitHub Projects
 
   <div class="repo-grid">
     {% for repo in site.github.public_repositories %}
-      {% unless repo.fork %}
+      {% unless repo.fork or repo.name == "BilboSagggins.github.io" %}
         <a href="{{ repo.html_url }}" class="repo-card" target="_blank">
           <div class="repo-title">📁 {{ repo.name }}</div>
           <div class="repo-desc">
