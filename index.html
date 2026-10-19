@@ -1,69 +1,88 @@
 ---
-layout: default
-title: My GitHub Projects
+layout: null
 ---
-
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>{{ site.title | default: "Repository Hub" }}</title>
+<meta name="description" content="{{ site.description }}">
+<meta name="color-scheme" content="dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
-  .repo-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 16px;
-    margin-top: 20px;
-  }
-  .repo-card {
-    border: 1px solid #333;
-    border-radius: 8px;
-    padding: 16px;
-    background: #161b22;
-    text-decoration: none;
-    color: #c9d1d9;
-    display: block;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  .repo-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    border-color: #58a6ff;
-  }
-  .repo-title {
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: #58a6ff;
-  }
-  .repo-desc {
-    font-size: 0.9rem;
-    color: #8b949e;
-    margin-top: 8px;
-  }
-  .repo-lang {
-    font-size: 0.8rem;
-    margin-top: 12px;
-    font-weight: 600;
-    color: #f0883e;
-  }
+:root{
+  --bg:#0e1013;--panel:#16191e;--panel2:#1b1f25;--ink:#e8e9ec;--muted:#9da2ad;--line:#272b33;
+  --accent:#33c183;--accent-ink:#04130b;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.5 Inter,system-ui,-apple-system,Segoe UI,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+a{color:inherit}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+header{border-bottom:1px solid var(--line)}
+.top{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;padding:18px 16px 14px}
+.brand{font:700 28px/1 "Barlow Condensed",sans-serif;letter-spacing:.5px;text-transform:uppercase}
+.brand span{color:var(--accent)}
+.sub{color:var(--muted);font-size:13px}
+main.wrap{padding:26px 16px 40px}
+h1{font:700 30px/1.1 "Barlow Condensed",sans-serif;text-transform:uppercase;letter-spacing:.5px;margin:0 0 6px}
+.intro{color:var(--muted);margin:0 0 20px}
+.count{font-family:"JetBrains Mono",monospace;font-size:12.5px;color:var(--muted)}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(290px,1fr))}
+.card{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 16px 14px;display:flex;flex-direction:column;gap:8px;transition:border-color .15s,transform .15s}
+.card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.card-top{display:flex;align-items:flex-start;gap:10px}
+.title{font:700 22px/1.1 "Barlow Condensed",sans-serif;letter-spacing:.3px;flex:1;text-decoration:none}
+.title::after{content:"";position:absolute;inset:0;border-radius:14px}
+.arrow{color:var(--muted);flex:none}
+.card:hover .arrow{color:var(--accent)}
+.desc{color:var(--muted);font-size:14px;flex:1}
+.meta{display:flex;align-items:center;gap:14px;font-size:12.5px;color:var(--muted);margin-top:4px}
+.lang{display:inline-flex;align-items:center;gap:6px}
+.lang i{width:10px;height:10px;border-radius:50%;background:var(--muted);display:inline-block}
+.code{position:relative;z-index:1;margin-left:auto;text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-weight:500}
+.code:hover{border-color:var(--muted);color:var(--ink)}
+footer.wrap{border-top:1px solid var(--line);padding:18px 16px 30px;color:var(--muted);font-size:12.5px}
+@media (max-width:560px){.brand{font-size:24px}h1{font-size:26px}}
 </style>
+</head>
+<body>
+<header>
+  <div class="wrap top">
+    <div class="brand">Bilbo<span>Sagggins</span></div>
+    <div class="sub">Repository Hub</div>
+  </div>
+</header>
 
-<div style="padding: 20px; max-width: 1200px; margin: 0 auto;">
-  <h1>Welcome to My GitHub Repository Hub 👋</h1>
-  <p>Here is an automated showcase of all my public projects on GitHub:</p>
+<main class="wrap">
+  <h1>My Projects</h1>
+  <p class="intro">Everything I've built, live on the web. Tap a card to open the site, or "Code" to see the source.</p>
 
-  <div class="repo-grid">
-    {% for repo in site.github.public_repositories %}
-      {% unless repo.fork or repo.name == "BilboSagggins.github.io" %}
-        <a href="https://BilboSagggins.github.io/{{ repo.name }}/" class="repo-card" target="_blank">
-          <div class="repo-title">📁 {{ repo.name }}</div>
-          <div class="repo-desc">
-            {% if repo.description %}
-              {{ repo.description }}
-            {% else %}
-              No description provided.
-            {% endif %}
-          </div>
-          {% if repo.language %}
-            <div class="repo-lang">🏷️ {{ repo.language }}</div>
-          {% endif %}
-        </a>
+  <div class="grid">
+    {% assign repos = site.github.public_repositories | sort: "pushed_at" | reverse %}
+    {% for repo in repos %}
+      {% assign lname = repo.name | downcase %}
+      {% unless repo.fork or lname == "bilbosagggins.github.io" %}
+      <article class="card">
+        <div class="card-top">
+          <a class="title" href="https://bilbosagggins.github.io/{{ repo.name }}/" target="_blank" rel="noopener">{{ repo.name }}</a>
+          <svg class="arrow" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+        </div>
+        <div class="desc">{% if repo.description %}{{ repo.description }}{% else %}No description yet.{% endif %}</div>
+        <div class="meta">
+          {% if repo.language %}<span class="lang"><i style="background:{% case repo.language %}{% when 'HTML' %}#e34c26{% when 'Python' %}#3572A5{% when 'JavaScript' %}#f1e05a{% when 'TypeScript' %}#3178c6{% when 'CSS' %}#663399{% else %}#9da2ad{% endcase %}"></i>{{ repo.language }}</span>{% endif %}
+          {% if repo.pushed_at %}<span>Updated {{ repo.pushed_at | date: "%b %-d, %Y" }}</span>{% endif %}
+          <a class="code" href="{{ repo.html_url }}" target="_blank" rel="noopener">Code</a>
+        </div>
+      </article>
       {% endunless %}
     {% endfor %}
   </div>
-</div>
+</main>
+
+<footer class="wrap">Built with GitHub Pages. This list updates automatically every day.</footer>
+</body>
+</html>
