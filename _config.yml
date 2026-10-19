@@ -1,0 +1,5 @@
+title: BilboSagggins - Repository Hub
+description: A showcase of all my GitHub projects.
+theme: minima
+plugins:
+  - jekyll-github-metadata
