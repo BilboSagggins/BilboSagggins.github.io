@@ -1,0 +1,65 @@
+---
+layout: default
+title: My GitHub Projects
+---
+
+<style>
+  .repo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    margin-top: 20px;
+  }
+  .repo-card {
+    border: 1px solid #e1e4e8;
+    border-radius: 8px;
+    padding: 16px;
+    background: #f6f8fa;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .repo-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+  .repo-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #0366d6;
+  }
+  .repo-desc {
+    font-size: 0.9rem;
+    color: #586069;
+    margin-top: 8px;
+  }
+  .repo-lang {
+    font-size: 0.8rem;
+    margin-top: 12px;
+    font-weight: 600;
+  }
+</style>
+
+<h1>Welcome to My GitHub Repository Hub 👋</h1>
+<p>Here is an automated showcase of all my public projects on GitHub:</p>
+
+<div class="repo-grid">
+  {% for repo in site.github.public_repositories %}
+    {% unless repo.fork %}
+      <a href="{{ repo.html_url }}" class="repo-card" target="_blank">
+        <div class="repo-title">📁 {{ repo.name }}</div>
+        <div class="repo-desc">
+          {% if repo.description %}
+            {{ repo.description }}
+          {% else %}
+            No description provided.
+          {% me %}
+          {% endif %}
+        </div>
+        {% if repo.language %}
+          <div class="repo-lang">🏷️ {{ repo.language }}</div>
+        {% endif %}
+      </a>
+    {% endunless %}
+  {% endfor %}
+</div>
